@@ -7,6 +7,7 @@ import makeFileUploadEndPoint from "./apis/uploadFile";
 const logger = createWinstonLogger(config.logPath);
 
 const app = express();
+app.use(express.json());
 
 const listener = app.listen(config.port, () => {
    logger.info(`app is listening on: ${getAddressInfo(listener.address())}`);
