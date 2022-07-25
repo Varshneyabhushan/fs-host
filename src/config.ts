@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { DownloadConfig } from "./api";
+import { DownloadConfig } from "./apis/uploadFile";
 import { toNumber } from "./utils/conversions";
 config();
 

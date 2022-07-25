@@ -3,7 +3,7 @@ import express from "express";
 import { getAddressInfo } from "./utils/conversions";
 
 import createWinstonLogger from "./logger";
-import makeFileUploadEndPoint from "./api";
+import makeFileUploadEndPoint from "./apis/uploadFile";
 const logger = createWinstonLogger(config.logPath);
 
 const app = express();
