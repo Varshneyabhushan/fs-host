@@ -14,7 +14,7 @@ const listener = app.listen(config.port, () => {
 
 listener.on("error", (e) => logger.error({ message: `error while starting the server`, error: e }));
 
-app.use("/files", makeFileUploadEndPoint(config.downloadConfig, logger));
+app.post("/files", makeFileUploadEndPoint(config.downloadConfig, logger));
 
 //hosting images
 app.use("/images", express.static(config.downloadConfig.downloadPath));
