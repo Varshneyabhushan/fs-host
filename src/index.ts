@@ -4,6 +4,8 @@ import { getAddressInfo } from "./utils/conversions";
 
 import createWinstonLogger from "./logger";
 import makeFileUploadEndPoint from "./apis/uploadFile";
+import makeFileStatusCheckEndpoint from "./apis/checkFile";
+
 const logger = createWinstonLogger(config.logPath);
 
 const app = express();
@@ -16,6 +18,7 @@ const listener = app.listen(config.port, () => {
 listener.on("error", (e) => logger.error({ message: `error while starting the server`, error: e }));
 
 app.post("/files", makeFileUploadEndPoint(config.downloadConfig, logger));
+app.post("/exists", makeFileStatusCheckEndpoint(config.downloadConfig, logger));
 
 //hosting images
 app.use("/images", express.static(config.downloadConfig.downloadPath));
