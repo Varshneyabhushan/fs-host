@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { createWriteStream, WriteStream } from "fs";
 import { Logger } from "winston";
 import { toErrorObject } from "../utils/conversions";
-import { ensureDirectoryExistence } from "../utils/fs";
+import { ensureDirectoryExistence, pathExists } from "../utils/fs";
 import IdleListener from "../utils/IdleListener";
 import { getPathForDownloadItem, getStreamFromURL } from "../utils/urls";
 
@@ -20,31 +20,30 @@ export default function makeFileUploadEndPoint(
    config: DownloadConfig,
    logger: Logger,
 ): RequestHandler {
-   return (req, res) => {
+   return async (req, res) => {
       const { url, path } = req.body;
       const currentItem = { url, path };
       let correctedPath = getPathForDownloadItem(currentItem);
       const downloadPath = `${config.downloadPath}/${correctedPath}`;
 
-      downloadUrl(url, downloadPath, config.requestTimeout)
-         .then(() => {
-            logger.info("downloaded to : " + downloadPath);
-            res.json({ success: true, path: correctedPath });
-         })
-         .catch((e) => {
-            let error = toErrorObject(e);
+      try {
+         await downloadUrl(url, downloadPath, config.requestTimeout);
+         logger.info("downloaded to : " + downloadPath);
+         res.json({ success: true, path: correctedPath });
+      } catch (e) {
+         let error = toErrorObject(e as Error);
 
-            logger.error({
-               message: "error downloading",
-               payLoad: {
-                  url,
-                  downloadPath,
-                  error,
-               },
-            });
-
-            res.status(400).json({ success: false, error });
+         logger.error({
+            message: "error downloading",
+            payLoad: {
+               url,
+               downloadPath,
+               error,
+            },
          });
+
+         res.status(400).json({ success: false, error });
+      }
    };
 }
 
