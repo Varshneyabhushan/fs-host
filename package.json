@@ -1,0 +1,39 @@
+{
+   "name": "fs-host",
+   "version": "1.0.0",
+   "description": "downloads and serves files",
+   "main": "dist/index.js",
+   "scripts": {
+      "prebuild": "rm -rf dist/",
+      "build": "tsc",
+      "start": "node dist/index.js",
+      "dev": "nodemon",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "prepare": "node prepare.js",
+      "format": "prettier --config prettierrc.json --write \"src/**/*.{ts,tsx,css,less,scss,js,jsx}\" \"*.json\""
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Varshneyabhushan/fs-host.git"
+   },
+   "author": "Varshneyabhushan",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/Varshneyabhushan/fs-host/issues"
+   },
+   "homepage": "https://github.com/Varshneyabhushan/fs-host#readme",
+   "devDependencies": {
+      "@types/express": "^4.17.13",
+      "@types/node": "^18.6.1",
+      "husky": "^8.0.1",
+      "lint-staged": "^13.0.3",
+      "nodemon": "^2.0.19",
+      "prettier": "^2.7.1",
+      "typescript": "^4.7.4"
+   },
+   "dependencies": {
+      "dotenv": "^16.0.1",
+      "express": "^4.18.1",
+      "fs": "^0.0.1-security"
+   }
+}
