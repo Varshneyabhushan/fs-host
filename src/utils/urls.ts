@@ -1,5 +1,6 @@
 import axios from "axios";
 import { DownloadItem } from "../apis/uploadFile";
+import { toErrorObject } from "./conversions";
 
 export function getTitleFromURL(url: string) {
    let lastSlashIndex = url.lastIndexOf("/");
@@ -19,9 +20,5 @@ export function getStreamFromURL(url: string, timeout: number): Promise<NodeJS.R
    return axios
       .get(url, { responseType: "stream", timeout })
       .then((res) => res.data)
-      .catch((e) => {
-         let error = new Error("");
-         error.name = e.toJSON().code;
-         return Promise.reject(error);
-      });
+      .catch((e) => Promise.reject(toErrorObject(e.toJSON())));
 }

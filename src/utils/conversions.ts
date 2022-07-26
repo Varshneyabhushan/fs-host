@@ -13,7 +13,7 @@ export function getAddressInfo(address: string | AddressInfo | null): string {
    return `${family}:${addressString}:${port}`;
 }
 
-export function toErrorObject(e: Error) {
-   let { name, message, stack } = e;
-   return { name, message, stack };
+export function toErrorObject(e: any) {
+   let { name, message, stack, code } = e;
+   return { name, message, stack, code };
 }
