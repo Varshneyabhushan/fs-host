@@ -73,7 +73,7 @@ async function downloadUrl(url: string, path: string, timeout: number): Promise<
 // when pipe is waiting for too long, it emits error
 function addTimeoutToStream(stream: WriteStream, timeout: number) {
    let e = new Error("stream is broke");
-   (e as any).code = "STREAM BREAK";
+   (e as any).code = "STREAM_BREAK";
 
    let listener = new IdleListener(timeout);
    listener.onIdle(() => stream.emit("error", e));
